@@ -33,10 +33,40 @@
 ===================== */
 
 // We set this to HTTP to prevent 'CORS' issues
-var downloadData = $.ajax("http://");
-var parseData = function() {};
-var makeMarkers = function() {};
-var plotMarkers = function() {};
+var downloadData = $.ajax("https://raw.githubusercontent.com/CPLN692-MUSA611/datasets/master/json/philadelphia-crime-snippet.json");
+
+var parseData = function(allAjaxResponseValues) {
+  return JSON.parse(allAjaxResponseValues);
+};
+
+
+// var interumMarkers = [];
+//
+// var makeMarkers = function(parsedVariables) {
+//   _.each(parsedVariables, function(crimeSpot){
+//       interumMarkers.push(L.marker([crimeSpot.Lat, crimeSpot.Lng]));
+//       }
+//   );
+//   return interumMarkers;
+// };
+
+
+var makeMarkers = function(parsedVariables) {
+  var interumMarkers = _.map(parsedVariables, function(crimeSpot){
+      return L.marker([crimeSpot.Lat, crimeSpot.Lng]);
+      }
+  );
+  return interumMarkers;
+};
+
+
+var plotMarkers = function(markersList) {
+  // console.log(markersList);
+  _.each(markersList, function(individualMarker){
+    individualMarker.addTo(map);
+  });
+};
+
 
 
 /* =====================
@@ -85,6 +115,7 @@ var Stamen_TonerLite = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/ton
 downloadData.done(function(data) {
   var parsed = parseData(data);
   var markers = makeMarkers(parsed);
+  // console.log(markers);
   plotMarkers(markers);
-  removeMarkers(markers);
+  // removeMarkers(markers);
 });

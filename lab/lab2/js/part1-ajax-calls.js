@@ -19,7 +19,9 @@
   This recipe, can be used by underscore's _.filter. It will return only words with
    >=5 characters.
 ===================== */
-var isLengthOfFiveOrMore = function(str) {};
+var isLengthOfFiveOrMore = function(str) {
+  return str.length >5;
+};
 
 console.log("isLengthOfFiveOrMore success:",
   _.isEqual(_.filter(['this', 'is','a', 'test', 'testing'], isLengthOfFiveOrMore), ['testing']));
@@ -30,15 +32,19 @@ console.log("isLengthOfFiveOrMore success:",
   function you write along with underscore's _.each to log the double of every
   number in the provided array.
 ===================== */
-var logDouble = function(num) {};
+var logDouble = function(num) {
+  console.log(num*2);
+};
 var theArray = [1, 5, 20, 100];
+
+_.each(theArray, logDouble);
 
 
 /* =====================
   Given this already defined function, define fizzbuzzArray so that, when mapped
   over, it will equal ['fizz', 'buzz', 'fizzbuzz'];
 ===================== */
-var fizzbuzzArray = [];
+var fizzbuzzArray = ["3", "5", "fizzbuzz"];
 var fizzbuzzFunc = function(num) {
   var str = '';
   if (num % 3 === 0) { str = 'fizz'; }
@@ -104,11 +110,30 @@ var phillyBikeCrashesDataUrl = "https://raw.githubusercontent.com/CPLN692-MUSA61
   that this step is completed before moving on!
 ===================== */
 
-
 /* =====================
   Now that you've properly parsed your data, use _.each to plot the
   dataset you've pulled down.
 ===================== */
+
+
+// Object Keys:
+// DC Number
+// Dispatch Date/Time
+// District
+// General Crime Category
+// Lng
+
+
+var crimeData = [];
+
+$.ajax(phillyCrimeDataUrl).done(function(ajaxResponseValue) {
+  crimeData = JSON.parse(ajaxResponseValue);     // a function that does some kind of transformation on the response
+  _.each(crimeData, function(crime){
+    L.marker([crime.Lat, crime.Lng]).addTo(map).bindPopup(crime['General Crime Category']);
+    }
+  );
+  //console.log(2,crimeData);   // Logging our computed result (within the body of the ajax function)
+});
 
 
 /* =====================
@@ -117,7 +142,7 @@ var phillyBikeCrashesDataUrl = "https://raw.githubusercontent.com/CPLN692-MUSA61
 
 var map = L.map('map', {
   center: [39.9522, -75.1639],
-  zoom: 14
+  zoom: 11
 });
 var Stamen_TonerLite = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.{ext}', {
   attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
