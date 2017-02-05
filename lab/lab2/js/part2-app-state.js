@@ -35,11 +35,13 @@
 // We set this to HTTP to prevent 'CORS' issues
 var downloadData = $.ajax("https://raw.githubusercontent.com/CPLN692-MUSA611/datasets/master/json/philadelphia-crime-snippet.json");
 
+
 var parseData = function(allAjaxResponseValues) {
   return JSON.parse(allAjaxResponseValues);
 };
 
 
+// ALTERNATIVE METHOD FOR USING _.EACH TO MAKE MARKERS (VS. _.MAP):
 // var interumMarkers = [];
 //
 // var makeMarkers = function(parsedVariables) {
@@ -68,7 +70,6 @@ var plotMarkers = function(markersList) {
 };
 
 
-
 /* =====================
   Define the function removeData so that it clears the markers you've written
   from the map. You'll know you've succeeded when the markers that were
@@ -82,15 +83,31 @@ var plotMarkers = function(markersList) {
   user's input.
 ===================== */
 
-var removeMarkers = function() {};
+var removeMarkers = function(allMarkers) {
+  _.each(allMarkers, function(eachMarker){
+    map.removeLayer(eachMarker);
+  });
+};
 
 /* =====================
   Optional, stretch goal
   Write the necessary code (however you can) to plot a filtered down version of
   the downloaded and parsed data.
 
+  SEE ABOVE ^^
+
   Note: You can add or remove from the code at the bottom of this file.
 ===================== */
+
+// Filter Function (stretch goal):
+var filterData = function(allParsedDated) {
+  _.filter(allParsedDated,
+    function(crimeObject){
+    return crimeObject.District == 1;
+    });
+};
+// It all starts to break down here, as the filtered data prints an undefined when printed using console.log in the function below...
+// Not sure what I am doing wrong. 
 
 /* =====================
  Leaflet setup - feel free to ignore this
@@ -114,8 +131,10 @@ var Stamen_TonerLite = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/ton
 
 downloadData.done(function(data) {
   var parsed = parseData(data);
-  var markers = makeMarkers(parsed);
-  // console.log(markers);
+  console.log(parsed);
+  var filtered = filterData(parsed);
+  console.log(filtered);
+  var markers = makeMarkers(filtered);
   plotMarkers(markers);
-  // removeMarkers(markers);
+  // removeMarkers(markers); //so fast it never actually shows the markers, HOWEVER, when you remove this like the markers are
 });
