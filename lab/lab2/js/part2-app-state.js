@@ -94,21 +94,17 @@ var removeMarkers = function(allMarkers) {
   Write the necessary code (however you can) to plot a filtered down version of
   the downloaded and parsed data.
 
-  SEE ABOVE ^^
-
   Note: You can add or remove from the code at the bottom of this file.
 ===================== */
 
 // Filter Function (stretch goal):
 var filterData = function(allParsedDated) {
-  _.filter(allParsedDated,
-    function(crimeObject){
+  return _.filter(allParsedDated, function(crimeObject){
     return crimeObject.District == 1;
-    });
+  });
 };
 // It all starts to break down here, as the filtered data prints an undefined when printed using console.log in the function below...
-// Not sure what I am doing wrong. 
-
+// Not sure what I am doing wrong.
 /* =====================
  Leaflet setup - feel free to ignore this
 ===================== */
@@ -131,7 +127,7 @@ var Stamen_TonerLite = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/ton
 
 downloadData.done(function(data) {
   var parsed = parseData(data);
-  console.log(parsed);
+  // console.log(parsed);
   var filtered = filterData(parsed);
   console.log(filtered);
   var markers = makeMarkers(filtered);
