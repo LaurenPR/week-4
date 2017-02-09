@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="css/reset.css" />
     <link rel="stylesheet" href="css/leaflet.css" />
     <!-- =====================
-    Edit css/main.css
+    <link rel="stylesheet" href="css/style.css"/>
     ====================== -->
     <link rel="stylesheet" href="css/main.css" />
   </head>
@@ -51,11 +51,110 @@
     <!-- Sidebar -->
     <div class="sidebar">
 
-      <!-- =====================
-      Add HTML!
-      ====================== -->
+      <!-- Filter Section -->
+      <div id="Filters">
+        <h2 id="topHeader">
+          Filters
+        </h2>
+
+        <br>
+        <br>
+
+        <p>By Name</p>
+
+        <p>
+          <input type = "text"
+                 id = "nameEnterField"/>
+        </p>
+        <div class="hideButton">
+          Hide Filters
+        </div>
+        <br>
+
+        <p>By Grade</p>
+
+        <!-- var myFunction = function() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        } -->
+        <!-- <div class="dropdown">
+          <button onclick="myFunction()" class="dropButton">All Grades</button>
+          <div id="grade_dropdown" class="dropdown-content">
+            <ul>PreK/Kindergarden</ul>
+            <ul>Elementary School</ul>
+            <ul>Middle School</ul>
+            <ul>Elem/Middle</ul>
+            <ul>High School</ul>
+            <ul>All Grades</ul>
+          </div>
+        </div>
+
+      This requires java for the function and is NOT working :(  -->
+
+
+        <!-- <div class="dropDown">Drop Down Menu Title</div> -->
+        <select class="dropdownOptions">
+          <option value="All Grades">All Grades</option>
+          <option value="PreK/Kindergarden">PreK/Kindergarden</option>
+          <option value="Elementary School">Elementary School</option>
+          <option value="Middle School">Middle School</option>
+          <option value="Elem/Middle">Elem/Middle</option>
+          <option value="High School">High School</option>
+        </select>
+        <br>
+        <br>
+
+      </div>
+
+      <!-- School Results -->
+      <p id="borderBottom">
+      </p>
+      <h2>Schools</h2>
+
+      <div id="filterResults" class="schoolBoxes">
+        <p id="SchoolTitle">
+          Henry, CHarles W.
+        </p>
+        <p id="GradeType">
+          Elem/Middle
+        </p>
+        <br>
+        <p id="SchoolAddress">
+          601 Carpenter La.<br> 19119-3405
+        </p>
+      </div>
+      <br>
+
+      <div id="filterResults" class="schoolBoxes">
+        <p id="SchoolTitle">
+          Universal Creighton Charter School
+        </p>
+        <p id="GradeType">
+          Elem/Middle
+        </p>
+        <br>
+        <p id="SchoolAddress">
+          5401 Tabor Ave<br>  19120 - 3614
+        </p>
+      </div>
+      <br>
+
+
+      <div id="filterResults" class="schoolBoxes">
+        <p id="SchoolTitle">
+          Marshal, John
+        </p>
+        <p id="GradeType">
+          Elementary School
+        </p>
+        <br>
+        <p id="SchoolAddress">
+          1243 South St<br> 19107-3333
+        </p>
+      </div>
 
     </div>
+
+
     <!-- Map -->
     <div id="map" class="map"></div>
 
