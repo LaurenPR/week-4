@@ -22,14 +22,18 @@
 
   Remember, this is open-ended. Try to see what you can produce.
 ===================== */
+// var myData;
+// var myMarkers = [L.marker([39.9522, -75.1639])];
+// var numericField1, numericField2, booleanField, stringField;
+
 
 /* =====================
   Define a resetMap function to remove markers from the map and clear the array of markers
 ===================== */
 var resetMap = function() {
-  /* =====================
-    Fill out this function definition
-  ===================== */
+    _.each(myMarkers, function(eachMarker){
+      map.removeLayer(eachMarker);
+    });
 };
 
 /* =====================
@@ -37,18 +41,39 @@ var resetMap = function() {
   will be called as soon as the application starts. Be sure to parse your data once you've pulled
   it down!
 ===================== */
+var parseData = function(allAjaxResponseValues) {
+  return JSON.parse(allAjaxResponseValues);
+  };
+
 var getAndParseData = function() {
-  /* =====================
-    Fill out this function definition
-  ===================== */
+  var downloadData = $.ajax("https://raw.githubusercontent.com/CPLN692-MUSA611/datasets/master/json/philadelphia-crime-snippet.json")
+  .done(function(data){
+    myData = parseData(data);
+    // var test = parseData(data);
+    // console.log(test);
+    // return test;
+  });
 };
 
 /* =====================
   Call our plotData function. It should plot all the markers that meet our criteria (whatever that
   criteria happens to be — that's entirely up to you)
 ===================== */
+var makeMarker = function(crimeSpot){
+    myMarkers = L.marker([crimeSpot.Lat, crimeSpot.Lng]);
+};
+
+
+var makeMarkersAndMap = function(parsedVariables) {
+    var interumMarkers = _.map(parsedVariables, makeMarker);
+    return interumMarkers.addTo(map);
+  };
+
+var isInDistrict = function(crimeObject){
+  return crimeObject.District >= numericField1 && crimeObject.District <= numericField2;
+};
+
 var plotData = function() {
-  /* =====================
-    Fill out this function definition
-  ===================== */
+  var filtered =  _.filter(myData, isInDistrict);
+  return makeMarkersAndMap(filtered);
 };
